@@ -1,0 +1,79 @@
+﻿@model GadgetStation.Models.Product
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="container my-5">
+    <!-- Product Header Section -->
+    <div class="jumbotron text-center bg-info text-white rounded shadow-sm">
+        <h1 class="display-4">@Model.Name</h1>
+        <p class="lead">Discover the features and details of your favorite gadget.</p>
+    </div>
+
+    <!-- Product Details Section -->
+    <div class="row mt-4">
+        <!-- Product Image -->
+        <div class="col-lg-6 mb-4">
+            <div class="border rounded shadow-sm">
+                <img class="img-fluid rounded" src="@Url.Content(Model.ImageUrl)" alt="@Model.Name" style="max-height: 400px; object-fit: cover;">
+            </div>
+        </div>
+
+        <!-- Product Information -->
+        <div class="col-lg-6">
+            <h3 class="text-primary">@Model.Name</h3>
+            <p class="text-muted">@Model.Description</p>
+            <p><strong>Price:</strong> <span class="text-success">$@Model.Price</span></p>
+            <p><strong>Stock:</strong> @if (Model.Stock > 0)
+                {
+                    <span class="text-success">@Model.Stock Available</span>
+                }
+                else
+                {
+                    <span class="text-danger">Out of Stock</span>
+                }</p>
+            <p><strong>Category:</strong> @Model.Category.Name</p>
+
+            <!-- Add to Cart Section -->
+            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-3">
+                <input type="hidden" name="productId" value="@Model.ProductId" />
+                <button type="submit" class="btn btn-success btn-lg btn-block">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+            </form>
+
+            <!-- Action Buttons -->
+            <div class="d-flex mt-4">
+                <a href="@Url.Action("Index", "Products")" class="btn btn-outline-primary mr-2">
+                    <i class="fas fa-arrow-left"></i> Back to Products
+                </a>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mt-5 bg-light p-4 rounded shadow-sm">
+        <h4 class="text-center text-primary">Why Choose This Gadget?</h4>
+        <div class="row mt-3 text-center">
+            <div class="col-md-4">
+                <i class="fas fa-battery-full fa-2x text-success"></i>
+                <h5 class="mt-2">Long Battery Life</h5>
+                <p>Enjoy extended usage with unmatched battery performance.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-star fa-2x text-warning"></i>
+                <h5 class="mt-2">Top Rated</h5>
+                <p>Highly recommended by users for its quality and features.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-tools fa-2x text-danger"></i>
+                <h5 class="mt-2">Durable Design</h5>
+                <p>Built to last with premium materials and craftsmanship.</p>
+            </div>
+        </div>
+    </div>
+</div>
