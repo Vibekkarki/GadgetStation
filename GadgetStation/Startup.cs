@@ -1,6 +1,9 @@
+using GadgetStation.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +27,13 @@ namespace GadgetStation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<GadgetStationDbContextcs>(options =>options.UseSqlServer(Configuration.GetConnectionString("GadgetStationContext")));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";  // Specify login path
+                options.LogoutPath = "/Auth/Logout"; // Specify logout path
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

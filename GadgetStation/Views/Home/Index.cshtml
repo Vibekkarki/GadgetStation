@@ -1,8 +1,65 @@
-﻿@{
+﻿@model IEnumerable<GadgetStation.Models.Product>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container my-5">
+    <header class="text-center mb-5">
+        <h1 class="display-4">Welcome to Gadget Station</h1>
+        <p class="lead">Your one-stop shop for the latest electronics and gadgets.</p>
+        <a href="#products-section" class="btn btn-outline-primary btn-lg mt-3">Explore Now</a>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="jumbotron bg-primary text-white text-center py-5 mb-5">
+        <h2>Unleash the Future</h2>
+        <p class="lead">Find top-notch gadgets that fit your style and needs.</p>
+    </div>
+
+    <!-- Product Section -->
+    <section id="products-section" class="mt-5">
+        <h2 class="text-center mb-4">Featured Products</h2>
+
+        <div class="row">
+            @foreach (var product in Model.Take(3))
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img class="card-img-top" src="@Url.Content(product.ImageUrl)" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            <p class="text-primary font-weight-bold">$@product.Price</p>
+                            <a href="@Url.Action("Details", "Products", new { id = product.ProductId })" class="btn btn-primary btn-block">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="bg-light py-5 mt-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Why Choose Us?</h2>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                    <h5>Fast Shipping</h5>
+                    <p>Get your gadgets delivered to your doorstep in no time.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-certificate fa-3x text-primary mb-3"></i>
+                    <h5>Quality Assurance</h5>
+                    <p>We guarantee top-quality products that you can trust.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                    <h5>24/7 Support</h5>
+                    <p>Our support team is always ready to assist you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

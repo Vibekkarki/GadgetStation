@@ -1,0 +1,56 @@
+﻿@model GadgetStation.Models.User
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create an Account</h2>
+
+    <!-- Form Start -->
+    <form asp-action="Register" method="post" enctype="multipart/form-data">
+        <!-- Name Field -->
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Role" class="control-label"></label>
+            <input asp-for="Role" class="form-control" type="text" />
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <!-- Register Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+        </div>
+    </form>
+
+    <!-- Error Message -->
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    <!-- Login Link -->
+    <div class="text-center mt-4">
+        <p>Already have an account? <a href="@Url.Action("Login", "Auth")" class="btn btn-link">Login here</a></p>
+    </div>
+</div>

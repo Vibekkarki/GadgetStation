@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Login</h2>
+
+    <!-- Form Start -->
+    <form asp-action="Login" method="post">
+        <!-- Email Field -->
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" required />
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" required />
+        </div>
+
+        <!-- Login Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+        </div>
+    </form>
+
+    <!-- Display Error Message -->
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    <!-- Register Link -->
+    <div class="text-center mt-4">
+        <p>Don't have an account? <a href="@Url.Action("Register", "Auth")" class="btn btn-link">Register here</a></p>
+    </div>
+</div>
