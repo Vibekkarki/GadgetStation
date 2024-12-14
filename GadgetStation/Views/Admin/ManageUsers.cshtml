@@ -1,0 +1,76 @@
+﻿@model IEnumerable<GadgetStation.Models.User>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessageUser"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessageUser"];
+        </div>
+    }
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <!-- Add New User Button -->
+    <div class="mb-3">
+        <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-success btn-lg">
+            <i class="fas fa-user-plus"></i> Add New User
+        </a>
+    </div>
+
+    <!-- Users Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>
+                        @if (user.Role != "Admin")
+                        {
+                            <!-- Edit Button -->
+                            <a href="@Url.Action("EditUser", "Admin", new { id = user.UserId })" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <!-- Delete Button -->
+                            <a href="@Url.Action("DeleteUser", "Admin", new { id = user.UserId })" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="User pagination">
+            <ul class="pagination">
+                @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                {
+                    <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("ManageUsers", new { page = i, pageSize = (int)ViewData["PageSize"] })">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+</div>
+

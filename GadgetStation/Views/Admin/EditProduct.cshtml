@@ -1,0 +1,50 @@
+﻿@model GadgetStation.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container">
+    <h1>Edit Product</h1>
+    <form asp-action="EditProduct" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Stock" class="control-label"></label>
+            <input asp-for="Stock" class="form-control" />
+            <span asp-validation-for="Stock" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CategoryId" class="control-label"></label>
+            <select asp-for="CategoryId" class="form-control">
+                @foreach (var category in ViewData["Categories"] as List<GadgetStation.Models.Category>)
+                {
+                    var isSelected = category.CategoryId == Model.CategoryId ? "selected" : string.Empty;
+                    <option value=@category.CategoryId isSelected>@category.Name</option>
+                    @* <option value="@category.CategoryId" @(category.CategoryId == Model.CategoryId ? "selected" : "")>@category.Name</option> *@
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="control-label"></label>
+            <input asp-for="ImageUrl" class="form-control" type="text" placeholder="Enter image URL" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </form>
+</div>

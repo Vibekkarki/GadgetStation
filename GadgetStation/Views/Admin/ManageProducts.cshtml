@@ -1,0 +1,92 @@
+﻿@model IEnumerable<GadgetStation.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessageProduct"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessageProduct"];
+        </div>
+    }
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="mb-3">
+        <a href="@Url.Action("CreateProduct", "Admin")" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add New Product
+        </a>
+    </div>
+
+    <!-- Products Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Description</td>
+                            <td>@product.Price.ToString("C")</td>
+                            <td>@product.Stock</td>
+                            <td>@product.Category.Name</td>
+                            <td>
+                                <img src="@Url.Content(product.ImageUrl)" alt="Product Image" class="img-thumbnail" style="width: 100px; height: auto;" />
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <!-- Edit Button -->
+                                    <a href="@Url.Action("EditProduct", "Admin", new { id = product.ProductId })" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <!-- Delete Button -->
+                                    <form asp-action="DeleteProduct" asp-route-id="@product.ProductId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">No products found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Product pagination">
+            <ul class="pagination">
+                @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                {
+                    <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("ManageProducts", new { page = i, pageSize = (int)ViewData["PageSize"] })">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+</div>
